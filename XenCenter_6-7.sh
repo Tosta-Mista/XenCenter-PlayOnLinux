@@ -1,7 +1,7 @@
 #!/bin/bash
 # Date : (2017-03-17 08:00)
 # Last revision : (2017-03-17 18:00)
-# Wine version used : 1.7.39
+# Wine version used : 2.3
 # Distribution used to test : Linux Mint 18.1 x64
 # Author : José Gonçalves
 # Licence : Retail
@@ -23,9 +23,9 @@ AUTHOR="José Gonçalves"
 GAME_VMS="128"
  
 # Starting the script
-POL_GetSetupImages "https://raw.githubusercontent.com/Tosta-Mixta/XenCenter-PlayOnLinux/master/xen_logo.png" "" "$TITLE"
+POL_GetSetupImages "https://raw.githubusercontent.com/Tosta-Mixta/XenCenter-PlayOnLinux/master/xen_logo.png" "https://raw.githubusercontent.com/Tosta-Mixta/XenCenter-PlayOnLinux/master/left.jpg" "$TITLE"
 POL_SetupWindow_Init
-POL_SetupWindow_SetID 1234
+POL_SetupWindow_SetID 
  
 # Starting debugging API
 POL_Debug_Init
@@ -33,7 +33,7 @@ POL_Debug_Init
 POL_SetupWindow_presentation "$TITLE" "$EDITOR" "$GAME_URL" "$AUTHOR" "$PREFIX"
  
 # Setting Wine Version
-WORKING_WINE_VERSION="1.7.39"
+WORKING_WINE_VERSION="2.3"
  
 # Setting prefix path
 POL_Wine_SelectPrefix "$PREFIX"
@@ -65,6 +65,7 @@ POL_Wine_SetVideoDriver
 
 # Downloading client or choosing existing one
 mkdir -p "$WINEPREFIX/drive_c/$PROGRAMFILES/XenCenter/XenCenter6"
+
 if [ "$INSTALL_METHOD" = "DOWNLOAD" ]; then
         # Donwloading client
         cd "$WINEPREFIX/drive_c/$PROGRAMFILES/XenCenter/XenCenter6"
@@ -84,7 +85,7 @@ elif [ "$INSTALL_METHOD" = "LOCAL" ]; then
 fi
  
 # Making shortcut
-POL_Shortcut "$FILENAME" "$TITLE" "$TITLE.png" "-dx9single -autologin" "Game;RolePlaying;"
+POL_Shortcut "$FILENAME" "$TITLE" "$TITLE.png" "Accessoires;Virtualization;"
 
 # Begin installation
 cd "$WINEPREFIX/drive_c/$PROGRAMFILES/XenCenter/XenCenter6"
