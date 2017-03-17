@@ -14,23 +14,23 @@
 [ "$PLAYONLINUX" = "" ] && exit 0
 source "$PLAYONLINUX/lib/sources"
  
-TITLE="XenCenter 6 and 7"
+TITLE="XenCenter"
 PREFIX="XenCenter"
 FILENAME="XenServerSetup.exe"
 EDITOR="The Xen Project XenSource, Inc."
-GAME_URL="https://xenserver.org/download-older-versions-of-xenserver.html"
+DOC_URL="https://xenserver.org/download-older-versions-of-xenserver.html"
 AUTHOR="José Gonçalves"
 GAME_VMS="128"
  
 # Starting the script
-POL_GetSetupImages "https://raw.githubusercontent.com/Tosta-Mixta/XenCenter-PlayOnLinux/master/xen_logo.png" "https://raw.githubusercontent.com/Tosta-Mixta/XenCenter-PlayOnLinux/master/left.jpg" "$TITLE"
+POL_GetSetupImages "https://raw.githubusercontent.com/Tosta-Mixta/XenCenter-PlayOnLinux/master/xen_icon.png" "https://raw.githubusercontent.com/Tosta-Mixta/XenCenter-PlayOnLinux/master/left.jpg" "$TITLE"
 POL_SetupWindow_Init
 POL_SetupWindow_SetID 
  
 # Starting debugging API
 POL_Debug_Init
  
-POL_SetupWindow_presentation "$TITLE" "$EDITOR" "$GAME_URL" "$AUTHOR" "$PREFIX"
+POL_SetupWindow_presentation "$TITLE" "$EDITOR" "$DOC_URL" "$AUTHOR" "$PREFIX"
  
 # Setting Wine Version
 WORKING_WINE_VERSION="2.3"
@@ -39,7 +39,7 @@ WORKING_WINE_VERSION="2.3"
 POL_Wine_SelectPrefix "$PREFIX"
  
 # Choose a 32-Bit or 64-Bit architecture
-POL_SetupWindow_menu_list "$(eval_gettext 'Select architecture')" "$TITLE" "auto~x86~amd64" "~" "auto"
+POL_SetupWindow_menu_list "$(eval_gettext 'Select architecture')" "$TITLE" "x86" "~" "x86"
 ARCHITECTURE="$APP_ANSWER"
  
 # Downloading wine if necessary and creating prefix
@@ -55,7 +55,7 @@ POL_Call POL_Install_ie8
 POL_Call POL_Install_tahoma2
 
 # Choose between Downloading client or using local one
-POL_SetupWindow_InstallMethod "DOWNLOAD,LOCAL"
+POL_SetupWindow_InstallMethod "LOCAL"
  
 # Asking about memory size of graphic card
 POL_SetupWindow_VMS $GAME_VMS
@@ -85,12 +85,10 @@ elif [ "$INSTALL_METHOD" = "LOCAL" ]; then
 fi
  
 # Making shortcut
-POL_Shortcut "$FILENAME" "$TITLE" "$TITLE.png" "Accessoires;Virtualization;"
+POL_Shortcut "$FILENAME" "$TITLE" "xen_icon.png"
 
 # Begin installation
 cd "$WINEPREFIX/drive_c/$PROGRAMFILES/XenCenter/XenCenter6"
-
-POL_Wine start /unix $FILENAME -repair -image
  
 POL_SetupWindow_Close
 exit 0
