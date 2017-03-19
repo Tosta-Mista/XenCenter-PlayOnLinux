@@ -1,10 +1,9 @@
 #!/bin/bash
 # Date : (2017-03-17 08:00)
-# Last revision : (2017-03-17 18:00)
+# Last revision : (2017-03-19 21:16)
 # Wine version used : 1.8-rc1
 # Distribution used to test : Linux Mint 18.1 x64
 # Author : José Gonçalves
-# Licence : Retail
 # Only For : http://www.playonlinux.com
  
 ## Begin Note ##
