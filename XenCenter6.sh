@@ -1,20 +1,20 @@
 #!/bin/bash
 # Date : (2017-03-17 08:00)
 # Last revision : (2017-03-17 18:00)
-# Wine version used : 1.9.6
+# Wine version used : 1.8-rc1
 # Distribution used to test : Linux Mint 18.1 x64
 # Author : José Gonçalves
 # Licence : Retail
 # Only For : http://www.playonlinux.com
  
 ## Begin Note ##
-# 
+# Some errors occurs when the dotnet 3 and 3.5 press next to continue installation
 ## End Note ##
  
 [ "$PLAYONLINUX" = "" ] && exit 0
 source "$PLAYONLINUX/lib/sources"
  
-TITLE="XenCenter"
+TITLE="XenCenter6.5"
 PREFIX="XenCenter"
 FILENAME="XenServerSetup.exe"
 EDITOR="The Xen Project XenSource, Inc."
@@ -33,12 +33,12 @@ POL_Debug_Init
 POL_SetupWindow_presentation "$TITLE" "$EDITOR" "$DOC_URL" "$AUTHOR" "$PREFIX"
  
 # Setting Wine Version
-WORKING_WINE_VERSION="1.9.6"
+WORKING_WINE_VERSION="1.8-rc1"
  
 # Setting prefix path
 POL_Wine_SelectPrefix "$PREFIX"
  
-# Choose a 32-Bit or 64-Bit architecture
+# Choose a 32-Bit or 64-Bit architecture (64bit is currently not supported)
 POL_SetupWindow_menu_list "$(eval_gettext 'Select architecture')" "$TITLE" "x86" "~" "x86"
 ARCHITECTURE="$APP_ANSWER"
  
@@ -46,8 +46,13 @@ ARCHITECTURE="$APP_ANSWER"
 POL_System_SetArch "$ARCHITECTURE"
 POL_Wine_PrefixCreate "$WORKING_WINE_VERSION"
 
+# Installing additional components
+POL_Call POL_install_dotnet45 
+POL_Call POL_Install_ie8
+POL_Call POL_Install_tahoma2
+
 # Choose between Downloading client or using local one
-POL_SetupWindow_InstallMethod "LOCAL"
+POL_SetupWindow_InstallMethod "LOCAL-DOWNLOAD"
  
 # Asking about memory size of graphic card
 POL_SetupWindow_VMS $GAME_VMS
@@ -58,11 +63,6 @@ POL_Wine_SetVideoDriver
 # Seems to help with random crash issue
 Set_OS "win7"
 
-# Installing additional components
-POL_Call POL_install_dotnet40 
-POL_Call POL_Install_ie8
-POL_Call POL_Install_tahoma2
-
 # Downloading client or choosing existing one
 mkdir -p "$WINEPREFIX/drive_c/$PROGRAMFILES/Citrix/XenCenter"
 
@@ -71,6 +71,8 @@ if [ "$INSTALL_METHOD" = "DOWNLOAD" ]; then
         cd "$WINEPREFIX/drive_c/$PROGRAMFILES/Citrix/XenCenter"
         POL_Download "http://downloadns.citrix.com.edgesuite.net/10341/XenServer-6.5.0-SP1-XenCenterSetup.exe"
         FILENAME="XenServer-6.5.0-SP1-XenCenterSetup.exe"
+        POL_Wine "XenServer-6.5.0-SP1-XenCenterSetup.exe"
+
      
 elif [ "$INSTALL_METHOD" = "LOCAL" ]; then
         # Asking for client exe
@@ -80,9 +82,11 @@ elif [ "$INSTALL_METHOD" = "LOCAL" ]; then
         cp "$SETUP_EXE" "$WINEPREFIX/drive_c/$PROGRAMFILES/Citrix/XenCenter/XenServer-6.5.0-SP1-XenCenterSetup.exe"
         POL_Wine "$WINEPREFIX/drive_c/$PROGRAMFILES/Citrix/XenCenter/XenServer-6.5.0-SP1-XenCenterSetup.exe"
 fi
- 
+
 # Making shortcut
-POL_Shortcut "$FILENAME" "$TITLE" "xen_icon.png"
- 
+POL_Wine_WaitBefore "$TITLE"
+cd "$WINEPREFIX/drive_c/$PROGRAMFILES/Citrix/XenCenter"
+POL_Shortcut "XenCenter.exe" "$TITLE"
+
 POL_SetupWindow_Close
 exit 0
