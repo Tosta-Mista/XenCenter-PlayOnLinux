@@ -1,6 +1,6 @@
 #!/bin/bash
 # Date : (2017-03-17 08:00)
-# Last revision : (2017-03-19 21:16)
+# Last revision : (2017-03-21 22:29)
 # Wine version used : 1.8-rc1
 # Distribution used to test : Linux Mint 18.1 x64
 # Author : José Gonçalves
@@ -13,7 +13,7 @@
 [ "$PLAYONLINUX" = "" ] && exit 0
 source "$PLAYONLINUX/lib/sources"
  
-TITLE="XenCenter6.5"
+TITLE="XenCenter.exe"
 PREFIX="XenCenter"
 FILENAME="XenServerSetup.exe"
 EDITOR="The Xen Project XenSource, Inc."
@@ -67,15 +67,14 @@ mkdir -p "$WINEPREFIX/drive_c/$PROGRAMFILES/Citrix/XenCenter"
 
 if [ "$INSTALL_METHOD" = "DOWNLOAD" ]; then
         # Donwloading client
-        cd "$WINEPREFIX/drive_c/$PROGRAMFILES/Citrix/XenCenter"
+        cd "$WINEPREFIX/drive_c/$PROGRAMFILES/Citrix/XenCenter" || return
         POL_Download "http://downloadns.citrix.com.edgesuite.net/10341/XenServer-6.5.0-SP1-XenCenterSetup.exe"
-        FILENAME="XenServer-6.5.0-SP1-XenCenterSetup.exe"
         POL_Wine "XenServer-6.5.0-SP1-XenCenterSetup.exe"
 
      
 elif [ "$INSTALL_METHOD" = "LOCAL" ]; then
         # Asking for client exe
-        cd "$HOME"
+        cd "$HOME" || return
         POL_SetupWindow_browse "$(eval_gettext 'Please select the setup file to run')" "$TITLE"
         SETUP_EXE="$APP_ANSWER"
         cp "$SETUP_EXE" "$WINEPREFIX/drive_c/$PROGRAMFILES/Citrix/XenCenter/XenServer-6.5.0-SP1-XenCenterSetup.exe"
@@ -84,8 +83,8 @@ fi
 
 # Making shortcut
 POL_Wine_WaitBefore "$TITLE"
-cd "$WINEPREFIX/drive_c/$PROGRAMFILES/Citrix/XenCenter"
-POL_Shortcut "XenCenter.exe" "$TITLE"
+cd "$WINEPREFIX/drive_c/$PROGRAMFILES/Citrix/XenCenter" || return
+POL_Shortcut "$FILENAME" "$TITLE"
 
 POL_SetupWindow_Close
 exit 0
