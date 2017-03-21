@@ -15,7 +15,7 @@ source "$PLAYONLINUX/lib/sources"
  
 TITLE="XenCenter.exe"
 PREFIX="XenCenter"
-FILENAME="XenServerSetup.exe"
+FILENAME="XenCenter.exe"
 EDITOR="The Xen Project XenSource, Inc."
 DOC_URL="https://xenserver.org/download-older-versions-of-xenserver.html"
 AUTHOR="José Gonçalves"
