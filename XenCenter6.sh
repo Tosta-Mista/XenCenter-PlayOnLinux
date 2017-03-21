@@ -13,13 +13,12 @@
 [ "$PLAYONLINUX" = "" ] && exit 0
 source "$PLAYONLINUX/lib/sources"
  
-TITLE="XenCenter.exe"
+TITLE="XenCenter 6.5"
 PREFIX="XenCenter"
-FILENAME="XenCenter.exe"
 EDITOR="The Xen Project XenSource, Inc."
 DOC_URL="https://xenserver.org/download-older-versions-of-xenserver.html"
 AUTHOR="José Gonçalves"
-GAME_VMS="128"
+GAME_VMS="64"
  
 # Starting the script
 POL_GetSetupImages "https://raw.githubusercontent.com/Tosta-Mixta/XenCenter-PlayOnLinux/master/xen_icon.png" "https://raw.githubusercontent.com/Tosta-Mixta/XenCenter-PlayOnLinux/master/left.jpg" "$TITLE"
@@ -84,7 +83,7 @@ fi
 # Making shortcut
 POL_Wine_WaitBefore "$TITLE"
 cd "$WINEPREFIX/drive_c/$PROGRAMFILES/Citrix/XenCenter" || return
-POL_Shortcut "$FILENAME" "$TITLE"
+POL_Shortcut "XenCenter.exe" "$TITLE"
 
 POL_SetupWindow_Close
 exit 0
